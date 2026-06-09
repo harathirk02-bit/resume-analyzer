@@ -1,144 +1,63 @@
 ATS Resume Analyzer (AI-Powered Resume Screening System)
-
-==============================================
-
 🚀 Overview
 
-The ATS Resume Analyzer is a Python + Streamlit web application that simulates a real-world Applicant Tracking System (ATS).
+The ATS Resume Analyzer is a Python + Streamlit application that simulates a real ATS system.
 
-It analyzes resumes in PDF format and evaluates candidates based on:
+It analyzes resumes and evaluates candidates based on:
 
-🧠 Skill detection
-📊 Weighted ATS scoring system
-🧾 Section-based evaluation
-💼 Job role prediction
-💡 Smart improvement suggestions
-
-👉 This project helps understand how companies automatically filter and rank resumes.
-
+Skill detection
+ATS scoring
+Job role prediction
+Suggestions
 🛠️ Tech Stack
-Python 🐍
-Streamlit 🌐
-pdfplumber 📄
-Regex (re module)
+Python
+Streamlit
+pdfplumber
+Regex
 🏗️ Project Structure
-resume-analyzer/
-│
-├── app.py                  # Streamlit frontend UI
-├── utils/
-│   └── analyzer.py        # Backend ATS logic
-│
-└── README.md
+app.py → Frontend UI
+utils/analyzer.py → Backend logic
 ⚙️ Features
-
-✔ Upload resume in PDF format
-✔ Extract text automatically
-✔ Detect technical skills
-✔ Calculate ATS score (0–100)
-✔ Predict job role (AI / Web / Software / Beginner)
-✔ Suggest missing skills
-✔ Provide improvement tips
-✔ Clean Streamlit dashboard UI
-
+Upload PDF resume
+Extract text automatically
+Detect skills
+Generate ATS score
+Predict job role
+Suggest improvements
 🧠 How It Works
-📄 PDF Upload
-   ↓
-🔍 Extract Text (pdfplumber)
-   ↓
-🧹 Clean Text
-   ↓
+Upload resume
+Extract text
+Clean text
+Detect skills
+Calculate score
+Predict role
+Show results
+📌 Code Logic
+📄 PDF Extraction
+
+Converts PDF into text.
+
+🧹 Cleaning
+
+Removes symbols and noise.
+
 🧠 Skill Detection
-   ↓
-📊 ATS Score Calculation
-   ↓
+
+Finds matching skills from resume.
+
+📊 Scoring
+
+Calculates ATS score out of 100.
+
 💼 Role Prediction
-   ↓
-💡 Suggestions
-   ↓
-📺 Display Output
-📌 Code Explanation
-1️⃣ PDF Text Extraction
-def extract_text_from_pdf(pdf_file):
 
-✔ Converts PDF → text
-✔ Uses pdfplumber
-✔ Makes resume readable for analysis
+Suggests job role based on skills.
 
-2️⃣ Text Cleaning
-text = re.sub(r'[^a-z0-9\s]', ' ', text)
-text = re.sub(r'\s+', ' ', text)
-
-✔ Removes symbols
-✔ Normalizes text
-✔ Improves matching accuracy
-
-3️⃣ Skill Detection
-for skill, weight in SKILL_WEIGHTS.items():
-
-✔ Checks skills in resume
-✔ Uses regex matching
-✔ Assigns weight to each skill
-
-4️⃣ ATS Score Calculation
-final_score = min(score + section_bonus, 100)
-
-✔ Combines:
-
-Skill score
-Section bonus
-
-📊 Final range: 0–100
-
-5️⃣ Missing Skills Detection
-missing_skills = [s for s in SKILL_WEIGHTS if s not in found_skills]
-
-✔ Shows missing skills
-✔ Helps improve resume
-
-6️⃣ Job Role Prediction
-
-✔ Machine Learning → AI Engineer
-✔ React / HTML → Frontend Developer
-✔ Java / SQL → Software Developer
-✔ Else → Beginner
-
-7️⃣ Smart Suggestions
-
-✔ Learn Git & GitHub
-✔ Add real-world projects
-✔ Learn SQL / React / ML
-
-📊 Example Output
-📌 Found Skills: python, java
-
-📊 ATS Score: 58 / 100
-
-⭐ Rating: Intermediate ⭐⭐
-
-💼 Suggested Role: Software Developer
-
-💡 Suggestions:
-👉 Learn Git & GitHub
-👉 Add real-world projects
-👉 Learn SQL
-📦 Installation
-pip install streamlit pdfplumber
-▶️ Run Project
+📊 Output
+Skills found
+ATS score
+Rating
+Suggested role
+Suggestions
+🚀 Run Project
 streamlit run app.py
-🚀 Future Enhancements
-
-🔥 OCR support for scanned resumes
-🔥 AI-based semantic skill detection
-🔥 Resume PDF report download
-🔥 Graph-based skill visualization
-🔥 Job matching system
-
-👨‍💻 Conclusion
-
-This project simulates a real ATS system used in companies to:
-
-✔ Filter resumes
-✔ Rank candidates
-✔ Match job roles
-
-It is a strong beginner-to-intermediate AI project using Python + Streamlit.
