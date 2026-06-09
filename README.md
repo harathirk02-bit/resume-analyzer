@@ -1,15 +1,18 @@
-ATS Resume Analyzer (Python + Streamlit)
+ATS Resume Analyzer (AI-Powered Resume Screening System)
 🚀 Overview
 
-The ATS Resume Analyzer is a Python-based web application that simulates an Applicant Tracking System (ATS).
+The ATS Resume Analyzer is a Python + Streamlit web application that simulates a real-world Applicant Tracking System (ATS).
 
-It analyzes resumes in PDF format and evaluates them based on:
+It analyzes resumes in PDF format and evaluates candidates based on:
 
-🧠 Skills detection
-📊 Weighted scoring system
-🧾 Section-based bonus scoring
+🧠 Skill detection
+📊 Weighted ATS scoring system
+🧾 Section-based evaluation
 💼 Job role prediction
 💡 Smart improvement suggestions
+
+This project helps users understand how real ATS systems filter and rank resumes in companies.
+
 🛠️ Tech Stack
 Python 🐍
 Streamlit 🌐
@@ -18,54 +21,53 @@ Regex (re module)
 🏗️ Project Structure
 resume-analyzer/
 │
-├── app.py                  # Streamlit UI (Frontend)
-│
+├── app.py                  # Streamlit frontend UI
 ├── utils/
-│   └── analyzer.py        # ATS logic (Backend engine)
+│   └── analyzer.py        # Backend ATS logic
 │
 └── README.md
 ⚙️ Features
+
 ✔ Upload resume in PDF format
-✔ Extract text automatically
-✔ Detect technical skills
-✔ Calculate ATS score (0–100)
-✔ Predict job role (AI / Web / Software / Beginner)
-✔ Suggest missing skills
-✔ Provide improvement tips
-✔ Clean Streamlit dashboard UI
+✔ Extract text automatically from resume
+✔ Detect technical skills using NLP (regex-based matching)
+✔ Weighted ATS scoring system (0–100)
+✔ Section-based bonus scoring
+✔ Missing skill detection
+✔ Job role prediction (AI / Web / Software / Beginner)
+✔ Smart resume improvement suggestions
+✔ Clean and interactive Streamlit UI
+
 🧠 How It Works (Workflow)
-📄 PDF Resume Upload
+📄 Upload Resume (PDF)
         ↓
 🔍 Extract Text (pdfplumber)
         ↓
-🧹 Clean Text (remove symbols, normalize)
+🧹 Clean & Normalize Text
         ↓
-🧠 Skill Detection (regex matching)
+🧠 Skill Detection (Regex Matching)
         ↓
-📊 Score Calculation (weighted scoring + bonus)
+📊 ATS Score Calculation (Weighted + Bonus)
         ↓
 💼 Job Role Prediction
         ↓
-💡 Smart Suggestions
+💡 Suggestion Engine
         ↓
-📺 Display Results in Streamlit UI
+📺 Display Results in UI
 📌 Code Explanation
 1️⃣ PDF Text Extraction
 
 📍 File: analyzer.py
 
-Function:
-
 def extract_text_from_pdf(pdf_file):
 
 Purpose:
 
-Reads uploaded PDF resume
-Extracts text from each page using pdfplumber
-Converts text to lowercase
+Reads PDF resume page by page
+Extracts text using pdfplumber
+Converts text into lowercase
 
-Why it matters:
-ATS systems cannot directly analyze PDFs — they must convert them into text first.
+✔ This step converts PDF → readable text for processing.
 
 2️⃣ Text Cleaning
 text = re.sub(r'[^a-z0-9\s]', ' ', text)
@@ -97,38 +99,39 @@ final_score = min(score + section_bonus, 100)
 
 Components:
 
-Skill score (based on detected skills)
-Section bonus:
+Skill-based score
+Section bonuses:
 Skills
 Projects
 Experience
 Education
 Certifications
 
-Range: 0 → 100
+📊 Score Range: 0 → 100
 
 5️⃣ Missing Skills Detection
 missing_skills = [s for s in SKILL_WEIGHTS if s not in found_skills]
 
 Purpose:
 
-Lists skills not present in resume
-Helps users improve their profile
+Identifies missing technical skills
+Helps users improve resumes
 6️⃣ Job Role Prediction
 
-Based on skills detected:
+Based on detected skills:
 
-🧠 Machine Learning / NLP → Data Science / AI Engineer
-🌐 React / HTML / CSS → Frontend / Full Stack Developer
+🧠 Machine Learning / NLP → AI / Data Scientist
+🌐 HTML / CSS / React → Frontend / Full Stack Developer
 💻 Java / C / SQL → Software Developer
-📌 Else → Beginner / Fresher
+📌 Otherwise → Beginner / Fresher
 7️⃣ Smart Suggestions Engine
 
-Example:
+Example suggestions:
 
 Learn Git & GitHub
 Add real-world projects
-Learn SQL / React / ML basics
+Learn SQL / React / Machine Learning
+Focus on one tech stack
 
 Purpose:
 
@@ -141,8 +144,8 @@ Helps increase ATS score
 Responsibilities:
 
 Upload resume PDF
-Show extracted text
-Display results:
+Display extracted text
+Show results:
 Found skills
 Missing skills
 ATS score
@@ -171,11 +174,14 @@ pip install streamlit pdfplumber
 ▶️ Run Project
 streamlit run app.py
 🚀 Future Enhancements
+
 🔥 OCR support for scanned resumes
 🔥 AI-based semantic skill detection
 🔥 Resume PDF report download
 🔥 Graph-based skill visualization
 🔥 Job matching system like LinkedIn/Naukri
+🔥 AI Chat-based resume reviewer
+
 👨‍💻 Conclusion
 
 This project simulates a real-world ATS system used in companies to:
@@ -184,9 +190,10 @@ Filter candidates
 Rank resumes
 Match job roles
 
-It is a great beginner-to-intermediate AI project for:
+It is a strong beginner-to-intermediate AI project covering:
 
 ✔ Resume screening
 ✔ NLP basics
 ✔ Streamlit applications
 ✔ Python backend logic
+✔ Real-world ATS simulation
