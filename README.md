@@ -1,304 +1,192 @@
-# AI Resume Analyzer
+ATS Resume Analyzer (Python + Streamlit)
+🚀 Overview
 
-## Overview
+The ATS Resume Analyzer is a Python-based web application that simulates an Applicant Tracking System (ATS).
 
-AI Resume Analyzer is a web application developed using Python and Streamlit that helps users evaluate their resumes automatically. The system extracts text from PDF resumes, identifies technical skills, calculates a resume score, generates a rating, and suggests missing skills that can improve employability.
+It analyzes resumes in PDF format and evaluates them based on:
 
-The project demonstrates the use of Python programming, PDF processing, text analysis, and web application development in a simple and practical manner.
-
----
-
-## Features
-
-### Resume Upload
-
-Users can upload their resumes in PDF format through an easy-to-use web interface.
-
-### Text Extraction
-
-The application extracts text from uploaded PDF resumes using the PyPDF2 library.
-
-### Skill Detection
-
-The extracted text is compared with a predefined list of technical skills such as Python, Java, SQL, React, Machine Learning, and others.
-
-### Resume Score Calculation
-
-A score is generated based on the number of matching skills detected in the resume.
-
-### Resume Rating
-
-The system categorizes resumes into:
-
-* Beginner
-* Intermediate
-* Advanced
-
-### Skill Recommendations
-
-Missing skills are displayed to help users improve their resumes.
-
----
-
-## Technologies Used
-
-### Programming Language
-
-* Python
-
-### Libraries and Frameworks
-
-* Streamlit
-* PyPDF2
-* Pandas
-
-### Development Tools
-
-* VS Code
-* Git
-* GitHub
-
----
-
-## Project Structure
-
-```text
+🧠 Skills detection
+📊 Weighted scoring system
+🧾 Section-based bonus scoring
+💼 Job role prediction
+💡 Smart improvement suggestions
+🛠️ Tech Stack
+Python 🐍
+Streamlit 🌐
+pdfplumber 📄
+Regex (re module)
+🏗️ Project Structure
 resume-analyzer/
 │
-├── app.py
-├── requirements.txt
+├── app.py                  # Streamlit UI (Frontend)
 │
-└── utils/
-    ├── __init__.py
-    └── analyzer.py
-```
+├── utils/
+│   └── analyzer.py        # ATS logic (Backend engine)
+│
+└── README.md
+⚙️ Features
+✔ Upload resume in PDF format
+✔ Extract text automatically
+✔ Detect technical skills
+✔ Calculate ATS score (0–100)
+✔ Predict job role (AI / Web / Software / Beginner)
+✔ Suggest missing skills
+✔ Provide improvement tips
+✔ Clean Streamlit dashboard UI
+🧠 How It Works (Workflow)
+📄 PDF Resume Upload
+        ↓
+🔍 Extract Text (pdfplumber)
+        ↓
+🧹 Clean Text (remove symbols, normalize)
+        ↓
+🧠 Skill Detection (regex matching)
+        ↓
+📊 Score Calculation (weighted scoring + bonus)
+        ↓
+💼 Job Role Prediction
+        ↓
+💡 Smart Suggestions
+        ↓
+📺 Display Results in Streamlit UI
+📌 Code Explanation
+1️⃣ PDF Text Extraction
 
----
+📍 File: analyzer.py
 
-## File Description
+Function:
 
-### app.py
-
-The main application file.
-
-Responsibilities:
-
-* Creates the Streamlit user interface
-* Accepts PDF uploads
-* Calls analysis functions
-* Displays scores, ratings, and recommendations
-* Shows detected and missing skills
-
-### analyzer.py
-
-Contains the backend logic.
-
-Responsibilities:
-
-* Extract text from PDF resumes
-* Detect technical skills
-* Calculate resume score
-* Generate ratings
-* Identify missing skills
-
-### requirements.txt
-
-Contains all required project dependencies.
-
-Example:
-
-```text
-streamlit
-PyPDF2
-pandas
-```
-
----
-
-## System Workflow
-
-### Step 1
-
-User uploads a PDF resume.
-
-### Step 2
-
-The application extracts text from the uploaded file.
-
-### Step 3
-
-The extracted text is converted into lowercase format.
-
-### Step 4
-
-The system compares resume content with predefined technical skills.
-
-### Step 5
-
-Matched skills are stored as detected skills.
-
-### Step 6
-
-Unmatched skills are identified as missing skills.
-
-### Step 7
-
-The resume score is calculated.
-
-### Step 8
-
-A rating is assigned based on the score.
-
-### Step 9
-
-Results are displayed on the Streamlit dashboard.
-
----
-
-## Code Explanation
-
-### Text Extraction Function
+def extract_text_from_pdf(pdf_file):
 
 Purpose:
 
-* Read PDF files
-* Extract text from every page
+Reads uploaded PDF resume
+Extracts text from each page using pdfplumber
+Converts text to lowercase
 
-Working:
+Why it matters:
+ATS systems cannot directly analyze PDFs — they must convert them into text first.
 
-1. Open uploaded PDF
-2. Read each page
-3. Extract text
-4. Return combined text
-
----
-
-### Skill Detection Function
+2️⃣ Text Cleaning
+text = re.sub(r'[^a-z0-9\s]', ' ', text)
+text = re.sub(r'\s+', ' ', text)
 
 Purpose:
 
-* Find technical skills present in the resume
+Removes special characters
+Removes extra spaces
+Normalizes text for accurate matching
+3️⃣ Skill Detection System
+for skill, weight in SKILL_WEIGHTS.items():
+    if re.search(r'\b' + re.escape(skill) + r'\b', text):
 
-Working:
+How it works:
 
-1. Load predefined skill list
-2. Compare each skill with extracted text
-3. Store matched skills
-4. Generate detected skills list
-
----
-
-### Score Calculation Logic
-
-Formula:
-
-Resume Score = (Detected Skills / Total Skills) × 100
+Matches skills inside resume text
+Uses regex word boundaries for accuracy
+Assigns weight to each skill
 
 Example:
 
-Total Skills = 12
+Skill	Weight
+Python	10
+Java	8
+React	10
+4️⃣ ATS Score Calculation
+final_score = min(score + section_bonus, 100)
 
-Detected Skills = 9
+Components:
 
-Score = (9 ÷ 12) × 100
+Skill score (based on detected skills)
+Section bonus:
+Skills
+Projects
+Experience
+Education
+Certifications
 
-Score = 75%
+Range: 0 → 100
 
----
+5️⃣ Missing Skills Detection
+missing_skills = [s for s in SKILL_WEIGHTS if s not in found_skills]
 
-### Rating Logic
+Purpose:
 
-| Score Range | Rating       |
-| ----------- | ------------ |
-| 0 – 49      | Beginner     |
-| 50 – 79     | Intermediate |
-| 80 – 100    | Advanced     |
+Lists skills not present in resume
+Helps users improve their profile
+6️⃣ Job Role Prediction
 
----
+Based on skills detected:
 
-## Sample Output
+🧠 Machine Learning / NLP → Data Science / AI Engineer
+🌐 React / HTML / CSS → Frontend / Full Stack Developer
+💻 Java / C / SQL → Software Developer
+📌 Else → Beginner / Fresher
+7️⃣ Smart Suggestions Engine
 
-### Skills Detected
+Example:
 
-* Python
-* SQL
-* React
-* Git
+Learn Git & GitHub
+Add real-world projects
+Learn SQL / React / ML basics
 
-### Missing Skills
+Purpose:
 
-* FastAPI
-* Flask
-* Machine Learning
+Gives personalized resume improvement tips
+Helps increase ATS score
+8️⃣ Streamlit UI (Frontend)
 
-### Resume Score
+📍 File: app.py
 
-75%
+Responsibilities:
 
-### Resume Rating
+Upload resume PDF
+Show extracted text
+Display results:
+Found skills
+Missing skills
+ATS score
+Rating
+Suggested role
+Improvement suggestions
+📊 Example Output
+📌 Found Skills:
+python, java
 
-Intermediate
+📊 ATS Score:
+58 / 100
 
----
+⭐ Rating:
+Intermediate ⭐⭐
 
-## How to Run the Project
+💼 Suggested Role:
+Software Developer
 
-### Clone Repository
-
-```bash
-git clone https://github.com/harathirk02-bit/resume-analyzer.git
-```
-
-### Move into Project Folder
-
-```bash
-cd resume-analyzer
-```
-
-### Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### Run Application
-
-```bash
+💡 Suggestions:
+👉 Learn Git & GitHub  
+👉 Add real-world projects  
+👉 Learn SQL  
+📦 Installation
+pip install streamlit pdfplumber
+▶️ Run Project
 streamlit run app.py
-```
+🚀 Future Enhancements
+🔥 OCR support for scanned resumes
+🔥 AI-based semantic skill detection
+🔥 Resume PDF report download
+🔥 Graph-based skill visualization
+🔥 Job matching system like LinkedIn/Naukri
+👨‍💻 Conclusion
 
----
+This project simulates a real-world ATS system used in companies to:
 
-## Future Enhancements
+Filter candidates
+Rank resumes
+Match job roles
 
-* Email Extraction
-* Phone Number Extraction
-* Resume Download Report
-* AI-Based Suggestions
-* Job Role Recommendation
-* Better UI Design
-* Cloud Deployment
+It is a great beginner-to-intermediate AI project for:
 
----
-
-## Learning Outcomes
-
-Through this project, the following concepts were learned:
-
-* Python Programming
-* Streamlit Development
-* PDF Processing
-* Text Analysis
-* Git and GitHub
-* Resume Evaluation Techniques
-* Full Stack Application Basics
-
----
-
-## Author
-
-Harathi
-
-B.Tech CSE (AI & ML)
-
-JNTUA
+✔ Resume screening
+✔ NLP basics
+✔ Streamlit applications
+✔ Python backend logic
